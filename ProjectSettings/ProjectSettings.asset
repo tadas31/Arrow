@@ -618,7 +618,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: 26045c22-1ee4-4089-a5b9-a51c7ff50aa4
-  projectName: Arrows (2)
+  projectName: Arrows
   organizationId: griebia
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

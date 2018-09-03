@@ -16,7 +16,6 @@ public class ArrowScript : MonoBehaviour {
         //Rotates the arrow
         switch (position) {
             case 1:
-                arrow.transform.rotation.y
                 break;
             case 2:
                 break;
