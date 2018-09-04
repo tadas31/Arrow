@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour {
 
-
     Vector3 start = Vector3.zero;
     Vector3 end = Vector3.zero;
+    ParticleSystem trail;
 
     // Use this for initialization
     void Start () {
-		
-	}
+		trail = GameObject.Find("Trail").GetComponent< ParticleSystem>();
+        trail.Stop();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,27 +23,20 @@ public class Controls : MonoBehaviour {
         {
             start = Input.mousePosition;
             start = Camera.main.ScreenToWorldPoint(start).normalized;
+            trail.Play();
         }
+
+        trail.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //draws trail
 
         //gets last point
         if (Input.GetMouseButtonUp(0))
         {
             end = Input.mousePosition;
             end = Camera.main.ScreenToWorldPoint(end).normalized;
+            trail.Stop();
         }
-
-        //draws lines
-        Debug.DrawLine(Vector3.zero, Vector3.up, Color.blue);
-        Debug.DrawLine(Vector3.zero, Vector3.down, Color.blue);
-        Debug.DrawLine(start, end, Color.red);
-
-        //gets angle of line
-        float angle = Vector2.SignedAngle(start - end, Vector3.down);
-
-
-        Debug.Log("start   " + start + "  end  " + end);
-        Debug.Log("Kampas   " + angle);
-
+        
+        float angle = Vector2.SignedAngle(start - end, Vector3.down);   //gets angle of line
 
         //determines which arrow was selected
         if (angle > -22.5 && angle < 22.5)
