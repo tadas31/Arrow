@@ -14,7 +14,7 @@ public class Controls : MonoBehaviour {
     GameManager manager;
     // Use this for initialization
     void Start () {
-		trail = GameObject.Find("Trail").GetComponent< ParticleSystem>();
+		trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
         trail.Stop();
         manager = FindObjectOfType<GameManager>();
     }
