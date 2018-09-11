@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
         }
         //Calculating all of the width of the camera (5f is the camera size 2f is to both sides like from - 2.08 to 2.08)
         float cameraWidth = Camera.main.aspect * 5f *2f;
-        float scale = cameraWidth / (2 * amountOfArrows);
+        float scale = cameraWidth / (2.5f * amountOfArrows);//Change 2.5f if your arrow size is diffrent
         arrows = new GameObject[amountOfArrows];
         for (int i = 0; i < amountOfArrows; i++)
         {
