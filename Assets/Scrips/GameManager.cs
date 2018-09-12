@@ -25,25 +25,30 @@ public class GameManager : MonoBehaviour {
 	}
 
     /// <summary>
-    /// For testing purposes
+    /// Checks if the drag position was right
     /// </summary>
     public void ChangeInDraw()
     {
         if (arrowScript.position == controlsScript.dragPosition)
         {
-            Debug.Log("Same position");
             if (currentArrow == amountOfArrows - 1)
             {
+                //If it's was the last arrow what to do
                 amountOfArrows++;
                 currentArrow = 0;
                 ArrowInstanisation();
                 arrowScript = arrows[currentArrow].GetComponent<ArrowScript>();
             }
             else
+            {
+                //If it's a normal arrow
+                arrowScript.StopTimer();
                 arrowScript = arrows[++currentArrow].GetComponent<ArrowScript>();
+            }
+            
         }
         else {
-            Debug.Log("Difrent");
+            //If the direction of the drag is in the diffrent side than it was pointing
         }
         
     }
@@ -64,12 +69,14 @@ public class GameManager : MonoBehaviour {
         float cameraWidth = Camera.main.aspect * 5f *2f;
         float scale = cameraWidth / (2.5f * amountOfArrows);//Change 2.5f if your arrow size is diffrent
         arrows = new GameObject[amountOfArrows];
+        float time = 3f;
         for (int i = 0; i < amountOfArrows; i++)
         {
             //Sets it to the right position
             arrows[i] = Instantiate(mainArrow, new Vector2((cameraWidth/amountOfArrows*i) + (cameraWidth/ amountOfArrows / 2f) - cameraWidth/2f, arrowHeigth), Quaternion.identity);
             //Scales down the arrows that all of them would fit
             arrows[i].transform.localScale = new Vector2(scale,scale);
+            arrows[i].GetComponent<ArrowScript>().SetTimer(time+(0.5f*i));//Sets the time for every arrow
         }
     }
 }
