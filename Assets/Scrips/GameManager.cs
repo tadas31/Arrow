@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour {
     int currentArrow = 0;
     float arrowHeigth = (5f * 3f) / 8f;//The height at witch the arrows are set
 
+    private Canvas gameOverScreen;
+
     // Use this for initialization
     void Start () {
+        gameOverScreen = GameObject.Find("GameOverScreenCanvas").GetComponent<Canvas>();
+        gameOverScreen.gameObject.SetActive(false);
         controlsScript = controls.GetComponent<Controls>();
         ArrowInstanisation();
         arrowScript = arrows[currentArrow].GetComponent<ArrowScript>();

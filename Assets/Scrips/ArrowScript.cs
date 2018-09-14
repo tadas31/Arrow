@@ -39,7 +39,7 @@ public class ArrowScript : MonoBehaviour {
         else
         {
             //If the time ends(Change here)
-            SceneManager.LoadScene("MainMenu");
+            //SceneManager.LoadScene("MainMenu");
         }
         //If it is stopped in between the change
         if (spriteTime > 0 && time < (timeAmt + spriteTimeAmt) / 2 && time > (timeAmt - spriteTimeAmt) / 2 && stop)
