@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOverScreen : MonoBehaviour {
 
@@ -12,29 +13,39 @@ public class GameOverScreen : MonoBehaviour {
     private float deltaY;
     private Transform maxHeight;
     private bool navigation;                //if true then uses tahes user to menu or game else navigates store
+    public int score;
 
     ParticleSystem trail;
 
+    Text Score;
     // Use this for initialization
     void Start()
     {
         navigation = false;
         maxHeight = GameObject.Find("MaxNavigationHeight").GetComponent<Transform>();
         trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
+        Score = GameObject.Find("Score").GetComponent<Text>();
         trail.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Score.text = score.ToString();
     }
+
+    public void ShowMenu()
+    {
+        navigation = true;
+    }
+
 
     private void FixedUpdate()
     {
 
         foreach (Touch t in Input.touches)
         {
+            Debug.Log("Works");
             if (t.position.y <= maxHeight.position.y && !navigation)
                 navigation = true;
 

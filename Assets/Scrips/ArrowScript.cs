@@ -8,7 +8,8 @@ public class ArrowScript : MonoBehaviour {
     public int position;
     private SpriteRenderer spriteRenderer;
     private Image timer;//Timer component
-    public Sprite sprite;
+    public Sprite spriteWhenNotVisable;
+    public Sprite spriteWhenVisable;
 
     float timeAmt = 4f;//Time for the timer
     float time;
@@ -38,20 +39,24 @@ public class ArrowScript : MonoBehaviour {
         }
         else
         {
-            //If the time ends(Change here)
-            //SceneManager.LoadScene("MainMenu");
+            if (stop)
+            {
+                ChangeSprite(spriteWhenVisable);
+            }
+
+            if(time <= 0)
+            {
+                //If the time ends(Change here)
+                FindObjectOfType<GameManager>().GameOver();
+            }        
         }
-        //If it is stopped in between the change
-        if (spriteTime > 0 && time < (timeAmt + spriteTimeAmt) / 2 && time > (timeAmt - spriteTimeAmt) / 2 && stop)
-        {
-            ChangeSprite();
-        }
+
     }
 
     /// <summary>
-    /// Changes the sprite form arrow to not visable conponent
+    /// Changes the sprite of the arrow
     /// </summary>
-    private void ChangeSprite()
+    private void ChangeSprite(Sprite sprite)
     {
         spriteTime -= Time.deltaTime;
         float change = spriteTime / spriteTimeAmt;
@@ -76,7 +81,7 @@ public class ArrowScript : MonoBehaviour {
         
         if (time < (timeAmt+spriteTimeAmt) / 2 && time > (timeAmt - spriteTimeAmt) / 2)
         {
-            ChangeSprite();
+            ChangeSprite(spriteWhenNotVisable);
         }   
     }
 
@@ -132,11 +137,18 @@ public class ArrowScript : MonoBehaviour {
         this.time = time;
     }
 
+
+    public float GetTime()
+    {
+        return time;
+    }
+
     /// <summary>
     /// Stops the timer
     /// </summary>
     public void StopTimer()
     {
+        spriteTime = spriteTimeAmt;
         stop = true;
     }
 }

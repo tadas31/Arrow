@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
     {
         if (arrowScript.position == controlsScript.dragPosition)
         {
+            gameOverScreen.GetComponent<GameOverScreen>().score = + 100 * (int)arrowScript.GetTime();//Change here if i feel like it
             if (currentArrow == amountOfArrows - 1)
             {
                 //If it's was the last arrow what to do
@@ -53,14 +54,15 @@ public class GameManager : MonoBehaviour {
         }
         else {
             //If the direction of the drag is in the diffrent side than it was pointing
+            GameOver();
         }
         
     }
 
     /// <summary>
-    /// Creates the arrows
+    /// Destroys all of the arrows in the array
     /// </summary>
-    public void ArrowInstanisation()
+    public void DestroyArrows()
     {
         if (arrows != null)
         {
@@ -69,6 +71,19 @@ public class GameManager : MonoBehaviour {
                 Destroy(arrows[i]);
             }
         }
+    }
+
+    public void GameOver() {
+        gameOverScreen.gameObject.SetActive(true);
+        DestroyArrows();
+    }
+
+    /// <summary>
+    /// Creates the arrows
+    /// </summary>
+    public void ArrowInstanisation()
+    {
+        DestroyArrows();
         //Calculating all of the width of the camera (5f is the camera size 2f is to both sides like from - 2.08 to 2.08)
         float cameraWidth = Camera.main.aspect * 5f *2f;
         float scale = cameraWidth / (2.5f * amountOfArrows);//Change 2.5f if your arrow size is diffrent
