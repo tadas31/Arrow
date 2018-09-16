@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public GameObject mainArrow;
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour {
 
     private Canvas gameOverScreen;
 
+    private Text scoreText;
+    private int score;
+
     // Use this for initialization
     void Start () {
         gameOverScreen = GameObject.Find("GameOverScreenCanvas").GetComponent<Canvas>();
@@ -22,6 +26,8 @@ public class GameManager : MonoBehaviour {
         controlsScript = controls.GetComponent<Controls>();
         ArrowInstanisation();
         arrowScript = arrows[currentArrow].GetComponent<ArrowScript>();
+        scoreText = GameObject.Find("Score").GetComponent<Text>();
+        score = 0;
     }
 	
 	// Update is called once per frame
@@ -35,7 +41,10 @@ public class GameManager : MonoBehaviour {
     {
         if (arrowScript.position == controlsScript.dragPosition)
         {
-            gameOverScreen.GetComponent<GameOverScreen>().score = + 100 * (int)arrowScript.GetTime();//Change here if i feel like it
+           
+            score = score + (int)(100f * arrowScript.GetTime());//Change here if i feel like it
+            scoreText.text = score.ToString();
+
             if (currentArrow == amountOfArrows - 1)
             {
                 //If it's was the last arrow what to do
@@ -76,6 +85,8 @@ public class GameManager : MonoBehaviour {
     public void GameOver() {
         gameOverScreen.gameObject.SetActive(true);
         DestroyArrows();
+        arrowScript = null;
+        PlayAdScript.ShowAd();
     }
 
     /// <summary>
