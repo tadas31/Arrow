@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
+    private bool isColorLeapOver;
+    private SpriteRenderer background;
+    private float lerpTime = 20.0f;
+    private List<Color> colors;
+
     private Touch initialTouch = new Touch();
     private float distance = 0;
     private bool swipedSideways;
@@ -15,13 +20,17 @@ public class MainMenu : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        isColorLeapOver = true;
+        colors = new List<Color>() { Color.yellow, Color.red, new Color(0.9905f, 0.4065f, 0.8920f), Color.blue, new Color(0.4078f, 0.9921f, 0.9537f), Color.green, Color.yellow };
+        background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
         trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
         trail.Stop();
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (isColorLeapOver)
+            StartCoroutine(ColorLerp());
     }
 
     
@@ -70,6 +79,29 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
+    IEnumerator ColorLerp()
+    {
+        isColorLeapOver = false;
+
+        if (colors.Count >= 2)
+        {
+            for (int i = 1; i < colors.Count; i++)
+            {
+                float startTime = Time.time;
+                float percentageComplete = 0;
+
+                while (percentageComplete < 1)
+                {
+                    float elapsedTime = Time.time - startTime;
+                    percentageComplete = elapsedTime / (lerpTime / (colors.Count - 1));
+                    background.color = Color.Lerp(colors[i - 1], colors[i], percentageComplete);
+                    yield return null;
+                }
+            }
+        }
+        isColorLeapOver = true;
+    }
+
     public void OnStart()
     {
         SceneManager.LoadScene("Game");
@@ -79,4 +111,6 @@ public class MainMenu : MonoBehaviour {
     {
         SceneManager.LoadScene("Store");
     }
+
+    
 }

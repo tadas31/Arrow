@@ -464,7 +464,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -949,7 +949,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 3000
+    maxNumParticles: 1000
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -5766,7 +5766,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 88ca1aecd7a3a514ebcaa7d16c035fd6, type: 3}
-  m_Color: {r: 0.9939448, g: 1, b: 0.37254906, a: 1}
+  m_Color: {r: 0.40784314, g: 0.99215686, b: 0.9537365, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
