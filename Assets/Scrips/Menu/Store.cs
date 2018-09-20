@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class Store : MonoBehaviour {
+public class Store : MonoBehaviour, IPointerClickHandler
+{
 
     private Touch initialTouch = new Touch();
     private float distance = 0;
@@ -25,8 +28,8 @@ public class Store : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 
     private void FixedUpdate()
     {
@@ -83,6 +86,11 @@ public class Store : MonoBehaviour {
                 trail.Stop();
             }
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        SaveManager.Instance.SetArrowSprite(eventData.pointerCurrentRaycast.gameObject.name);
     }
 
 }
