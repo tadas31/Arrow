@@ -69,4 +69,14 @@ public class MainMenu : MonoBehaviour {
             }
         }
     }
+
+    public void OnStart()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
+    public void OnStore()
+    {
+        SceneManager.LoadScene("Store");
+    }
 }

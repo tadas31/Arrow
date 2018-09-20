@@ -70,14 +70,14 @@ public class SaveManager : MonoBehaviour
     }
 
     //Sets arrow sprite
-    public void SetArrowSprite(Sprite arrowSprite)
+    public void SetArrowSprite(string arrowSprite)
     {
         state.arrowSprite = arrowSprite;
         Save();
     }
 
     //Gets arrow sprites
-    public Sprite GetArrowSprite()
+    public string GetArrowSprite()
     {
         return state.arrowSprite;
     }
