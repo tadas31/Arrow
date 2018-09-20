@@ -77,16 +77,20 @@ public class GameManager : MonoBehaviour {
         {
             for (int i = 0; i < arrows.Length; i++)
             {
-                Destroy(arrows[i]);
+                arrows[i].GetComponent<ArrowScript>().Destroy();
             }
         }
     }
 
     public void GameOver() {
-        gameOverScreen.gameObject.SetActive(true);
-        DestroyArrows();
-        arrowScript = null;
-        PlayAdScript.ShowAd();
+        if (!gameOverScreen.gameObject.active)
+        {
+            gameOverScreen.gameObject.SetActive(true);
+            DestroyArrows();
+            arrowScript = null; 
+            //PlayAdScript.ShowAd();
+        }
+        
     }
 
     /// <summary>

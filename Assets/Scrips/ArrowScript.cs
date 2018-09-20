@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;//Delete when not in use
 using UnityEngine.UI;
 
 public class ArrowScript : MonoBehaviour {
@@ -137,6 +136,22 @@ public class ArrowScript : MonoBehaviour {
         this.time = time;
     }
 
+    public void Destroy()
+    {
+        StartCoroutine(DestroyTimer(1.5f));
+    }
+
+    IEnumerator DestroyTimer(float time)
+    {
+        Debug.Log("Ha");
+        Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        rigidbody2D.angularVelocity = Random.Range(0,5f);
+        Debug.Log("Start");
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
+        Debug.Log("Finish");
+    }
 
     public float GetTime()
     {
