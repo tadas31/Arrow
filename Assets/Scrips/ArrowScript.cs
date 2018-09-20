@@ -25,13 +25,16 @@ public class ArrowScript : MonoBehaviour {
     bool stop = false;
     // Use this for initialization
     void Start () {
+        spriteWhenVisable = Resources.Load<Sprite>("Sprites/" + SaveManager.Instance.GetArrowSprite());
         position = Random.Range(1, 8);
         SetArrowPosition();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + SaveManager.Instance.GetArrowSprite());
         timer = GetComponentInChildren<Image>();
 	}
     // Update is called once per frame
 	void Update () {
+        
         if (time > 0 && !stop)
         {
             TimerChange();
@@ -43,11 +46,11 @@ public class ArrowScript : MonoBehaviour {
                 ChangeSprite(spriteWhenVisable);
             }
 
-            if(time <= 0)
+            if (time <= 0)
             {
                 //If the time ends(Change here)
                 FindObjectOfType<GameManager>().GameOver();
-            }        
+            }
         }
 
     }
