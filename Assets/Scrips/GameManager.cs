@@ -83,8 +83,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GameOver() {
-        if (!gameOverScreen.gameObject.active)
+        if (!gameOverScreen.gameObject.activeSelf)
         {
+            if (SaveManager.Instance.GetScore() < score)
+                SaveManager.Instance.SetMaxScore(score);
             gameOverScreen.gameObject.SetActive(true);
             DestroyArrows();
             arrowScript = null; 

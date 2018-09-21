@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
@@ -16,7 +17,8 @@ public class MainMenu : MonoBehaviour {
     private float deltaX;
     private float deltaY;
 
-    ParticleSystem trail;
+    private ParticleSystem trail;
+    private Text scoreText;
 
     // Use this for initialization
     void Start () {
@@ -24,11 +26,13 @@ public class MainMenu : MonoBehaviour {
         colors = new List<Color>() { Color.yellow, Color.red, new Color(0.9905f, 0.4065f, 0.8920f), Color.blue, new Color(0.4078f, 0.9921f, 0.9537f), Color.green, Color.yellow };
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
         trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
+        scoreText = GameObject.Find("Score").GetComponent<Text>();
         trail.Stop();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        scoreText.text = "Max score - " + SaveManager.Instance.GetScore();
         if (isColorLeapOver)
             StartCoroutine(ColorLerp());
     }
