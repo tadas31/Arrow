@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverScreen : MonoBehaviour {
+public class GameOverScreen : MonoBehaviour
+{
 
     private Touch initialTouch = new Touch();
     private float distance = 0;
@@ -14,8 +15,8 @@ public class GameOverScreen : MonoBehaviour {
     private Transform maxHeight;
     private bool navigation;                //if true then uses tahes user to menu or game else navigates store
 
-    ParticleSystem trail;
-
+    private ParticleSystem trail;
+    private float timer = 1.0f;
 
     // Use this for initialization
     void Start()
@@ -31,69 +32,77 @@ public class GameOverScreen : MonoBehaviour {
     {
     }
 
-    public void ShowMenu()
-    {
-        navigation = true;
-    }
+    //public void ShowMenu()
+    //{
+    //    navigation = true;
+    //}
 
 
     private void FixedUpdate()
     {
 
-        foreach (Touch t in Input.touches)
+        trail.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //draws trail
+        if (timer <= 0)
         {
-            if (Camera.main.ScreenToWorldPoint(t.position).y <= maxHeight.position.y && !navigation)
-                navigation = true;
+            foreach (Touch t in Input.touches)
+            {
+                if (Camera.main.ScreenToWorldPoint(t.position).y <= maxHeight.position.y && !navigation)
+                    navigation = true;
 
-            trail.transform.position = Camera.main.ScreenToWorldPoint(t.position);     //draws trail
-            if (t.phase == TouchPhase.Began)
-            {
-                trail.Play();
-                initialTouch = t;
-            }
-            else if (t.phase == TouchPhase.Moved)
-            {
-                deltaX = initialTouch.position.x - t.position.x;
-                deltaY = initialTouch.position.y - t.position.y;
-                distance = Mathf.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
-                swipedSideways = Mathf.Abs(deltaX) > Mathf.Abs(deltaY);
-            }
-            else if (t.phase == TouchPhase.Ended)
-            {
-                if (distance > 100f)
+
+                if (t.phase == TouchPhase.Began)
                 {
-                    if (swipedSideways && deltaX > 0) //swiped left
-                    {
-                        if (navigation)
-                        {
-                            SceneManager.LoadScene("MainMenu");
-                            navigation = false;
-                        }
-                    }
-                    else if (swipedSideways && deltaX <= 0) // swiped right
-                    {
-
-                    }
-                    else if (!swipedSideways && deltaY > 0) //swiped down
-                    {
-                        if (navigation)
-                        {
-                            SceneManager.LoadScene("Store");
-                            navigation = false;
-                        }
-                    }
-                    else if (!swipedSideways && deltaY <= 0) //swiped up
-                    {
-                        if (navigation)
-                        {
-                            SceneManager.LoadScene("Game");
-                            navigation = false;
-                        }
-                    }
+                    trail.Play();
+                    initialTouch = t;
                 }
-                initialTouch = new Touch();
-                trail.Stop();
+                else if (t.phase == TouchPhase.Moved)
+                {
+                    deltaX = initialTouch.position.x - t.position.x;
+                    deltaY = initialTouch.position.y - t.position.y;
+                    distance = Mathf.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+                    swipedSideways = Mathf.Abs(deltaX) > Mathf.Abs(deltaY);
+                }
+                else if (t.phase == TouchPhase.Ended)
+                {
+                    if (distance > 100f)
+                    {
+                        if (swipedSideways && deltaX > 0) //swiped left
+                        {
+                            if (navigation)
+                            {
+                                SceneManager.LoadScene("MainMenu");
+                                navigation = false;
+                            }
+                        }
+                        else if (swipedSideways && deltaX <= 0) // swiped right
+                        {
+
+                        }
+                        else if (!swipedSideways && deltaY > 0) //swiped down
+                        {
+                            if (navigation)
+                            {
+                                SceneManager.LoadScene("Store");
+                                navigation = false;
+                            }
+                        }
+                        else if (!swipedSideways && deltaY <= 0) //swiped up
+                        {
+                            if (navigation)
+                            {
+                                SceneManager.LoadScene("Game");
+                                navigation = false;
+                            }
+                        }
+                    }
+                    initialTouch = new Touch();
+                    trail.Stop();
+                }
             }
+        }
+        else
+        {
+            timer -= Time.deltaTime;
         }
     }
 }
