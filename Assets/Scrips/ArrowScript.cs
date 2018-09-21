@@ -8,7 +8,7 @@ public class ArrowScript : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Image timer;//Timer component
     public Sprite spriteWhenNotVisable;
-    public Sprite spriteWhenVisable;
+    private Sprite spriteWhenVisable;
 
     float timeAmt = 4f;//Time for the timer
     float time;

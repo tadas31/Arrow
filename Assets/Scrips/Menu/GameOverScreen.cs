@@ -42,8 +42,7 @@ public class GameOverScreen : MonoBehaviour {
 
         foreach (Touch t in Input.touches)
         {
-            Debug.Log("Works");
-            if (t.position.y <= maxHeight.position.y && !navigation)
+            if (Camera.main.ScreenToWorldPoint(t.position).y <= maxHeight.position.y && !navigation)
                 navigation = true;
 
             trail.transform.position = Camera.main.ScreenToWorldPoint(t.position);     //draws trail

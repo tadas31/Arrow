@@ -16,7 +16,8 @@ public class Store : MonoBehaviour, IPointerClickHandler
     private Transform maxHeight;
     private bool navigation;                //if true then uses tahes user to menu or game else navigates store
 
-    ParticleSystem trail;
+    private ParticleSystem trail;
+    private int ammountOfArrowSkins = 9;
 
     // Use this for initialization
     void Start () {
@@ -36,7 +37,7 @@ public class Store : MonoBehaviour, IPointerClickHandler
 
         foreach (Touch t in Input.touches)
         {
-            if (t.position.y <= maxHeight.position.y && !navigation)
+            if (Camera.main.ScreenToWorldPoint(t.position).y <= maxHeight.position.y && !navigation)
                 navigation = true;
 
             trail.transform.position = Camera.main.ScreenToWorldPoint(t.position);     //draws trail
@@ -71,7 +72,7 @@ public class Store : MonoBehaviour, IPointerClickHandler
                             SceneManager.LoadScene("Game");
                             navigation = false;
                         }
-                            
+
                     }
                     else if (!swipedSideways && deltaY > 0) //swiped down
                     {
@@ -90,7 +91,8 @@ public class Store : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SaveManager.Instance.SetArrowSprite(eventData.pointerCurrentRaycast.gameObject.name);
+        if (int.Parse(eventData.pointerCurrentRaycast.gameObject.name) > 0 && int.Parse(eventData.pointerCurrentRaycast.gameObject.name) < ammountOfArrowSkins)
+            SaveManager.Instance.SetArrowSprite(eventData.pointerCurrentRaycast.gameObject.name);
     }
 
 }
