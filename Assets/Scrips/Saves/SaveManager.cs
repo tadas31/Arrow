@@ -82,4 +82,17 @@ public class SaveManager : MonoBehaviour
         return state.arrowSprite;
     }
 
+    //Sets witch trail to use
+    public void SetTrail(string trail)
+    {
+        state.activeTrail = trail;
+        Save();
+    }
+
+    //Gets trail that is being used
+    public string GetTrail()
+    {
+        return state.activeTrail;
+    }
+
 }

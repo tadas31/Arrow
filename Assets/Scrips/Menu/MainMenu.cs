@@ -25,9 +25,9 @@ public class MainMenu : MonoBehaviour {
         isColorLeapOver = true;
         colors = new List<Color>() { Color.yellow, Color.red, new Color(0.9905f, 0.4065f, 0.8920f), Color.blue, new Color(0.4078f, 0.9921f, 0.9537f), Color.green, Color.yellow };
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
-        trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
+        //trail = GameObject.Find("1").GetComponent<ParticleSystem>();
         scoreText = GameObject.Find("Score").GetComponent<Text>();
-        trail.Stop();
+        //trail.Stop();
     }
 	
 	// Update is called once per frame
@@ -46,7 +46,7 @@ public class MainMenu : MonoBehaviour {
             trail.transform.position = Camera.main.ScreenToWorldPoint(t.position);     //draws trail
             if (t.phase == TouchPhase.Began)
             {
-                trail.Play();
+                //trail.Play();
                 initialTouch = t;
             }
             else if (t.phase == TouchPhase.Moved)
