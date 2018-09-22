@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour {
             //Scales down the arrows that all of them would fit
             arrows[i].transform.localScale = new Vector2(scale,scale);
             arrows[i].GetComponent<ArrowScript>().SetTimer(time+(0.5f*i));//Sets the time for every arrow
+            arrows[i].GetComponent<ArrowScript>().StartTimer();
         }
     }
 }

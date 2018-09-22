@@ -22,6 +22,7 @@ public class ArrowScript : MonoBehaviour {
     private Color transparent = new Color(1f, 1f, 1f, 0f);
     private Color visible = new Color(1f, 1f, 1f, 1f);
 
+    bool start = false;
     bool stop = false;
     // Use this for initialization
     void Start () {
@@ -31,28 +32,32 @@ public class ArrowScript : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + SaveManager.Instance.GetArrowSprite());
         timer = GetComponentInChildren<Image>();
+        GetComponent<MeshRenderer>().enabled = false;
+        
 	}
     // Update is called once per frame
 	void Update () {
+        if (start)
+        {
+            if (time > 0 && !stop)
+            {
+                TimerChange();
+            }
+            else
+            {
+                if (stop)
+                {
+                    ChangeSprite(spriteWhenVisable);
+                }
+
+                if (time <= 0)
+                {
+                    //If the time ends(Change here)
+                    FindObjectOfType<GameManager>().GameOver();
+                }
+            }
+        }
         
-        if (time > 0 && !stop)
-        {
-            TimerChange();
-        }
-        else
-        {
-            if (stop)
-            {
-                ChangeSprite(spriteWhenVisable);
-            }
-
-            if (time <= 0)
-            {
-                //If the time ends(Change here)
-                FindObjectOfType<GameManager>().GameOver();
-            }
-        }
-
     }
 
     /// <summary>
@@ -139,26 +144,32 @@ public class ArrowScript : MonoBehaviour {
         this.time = time;
     }
 
+    /// <summary>
+    /// Destroyes the game object by having it fall out og the screen
+    /// </summary>
     public void Destroy()
     {
-        StartCoroutine(DestroyTimer(1.5f));
-    }
-
-    IEnumerator DestroyTimer(float time)
-    {
-        Debug.Log("Ha");
         Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-        rigidbody2D.angularVelocity = Random.Range(0,5f);
-        Debug.Log("Start");
-        yield return new WaitForSeconds(time);
-        Destroy(gameObject);
-        Debug.Log("Finish");
+        rigidbody2D.AddTorque(Random.Range(-3f,3f),ForceMode2D.Impulse);
+        Destroy(gameObject,1.5f);
     }
 
+    /// <summary>
+    /// Returns the time left
+    /// </summary>
+    /// <returns>Time</returns>
     public float GetTime()
     {
         return time;
+    }
+
+    /// <summary>
+    /// Starts the timer
+    /// </summary>
+    public void StartTimer()
+    {
+        start = true;
     }
 
     /// <summary>
