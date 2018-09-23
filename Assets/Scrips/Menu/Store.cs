@@ -15,16 +15,14 @@ public class Store : MonoBehaviour, IPointerClickHandler
     private float deltaY;
     private Transform maxHeight;
     private bool navigation;                //if true then uses tahes user to menu or game else navigates store
-
-    private ParticleSystem trail;
-    private int ammountOfArrowSkins = 9;
+    
+    private int ammountOfArrowSkins = 3;
+    private int ammountOfTrailSkins = 2;
 
     // Use this for initialization
     void Start () {
         navigation = false;
         maxHeight = GameObject.Find("MaxNavigationHeight").GetComponent<Transform>();
-        trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
-        trail.Stop();
     }
 	
 	// Update is called once per frame
@@ -39,11 +37,9 @@ public class Store : MonoBehaviour, IPointerClickHandler
         {
             if (Camera.main.ScreenToWorldPoint(t.position).y <= maxHeight.position.y && !navigation)
                 navigation = true;
-
-            trail.transform.position = Camera.main.ScreenToWorldPoint(t.position);     //draws trail
+            
             if (t.phase == TouchPhase.Began)
             {
-                trail.Play();
                 initialTouch = t;
             }
             else if (t.phase == TouchPhase.Moved)
@@ -84,15 +80,17 @@ public class Store : MonoBehaviour, IPointerClickHandler
                     }
                 }
                 initialTouch = new Touch();
-                trail.Stop();
             }
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (int.Parse(eventData.pointerCurrentRaycast.gameObject.name) > 0 && int.Parse(eventData.pointerCurrentRaycast.gameObject.name) < ammountOfArrowSkins)
-            SaveManager.Instance.SetArrowSprite(eventData.pointerCurrentRaycast.gameObject.name);
+        if (eventData.pointerCurrentRaycast.gameObject.name.ToString().Contains("arrow"))
+            SaveManager.Instance.SetArrowSprite(eventData.pointerCurrentRaycast.gameObject.name.ToString());
+
+        if (eventData.pointerCurrentRaycast.gameObject.name.ToString().Contains("trail"))
+            SaveManager.Instance.SetTrail(eventData.pointerCurrentRaycast.gameObject.name.ToString());
     }
 
 }

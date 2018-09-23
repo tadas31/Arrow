@@ -28,25 +28,13 @@ public class Trail : MonoBehaviour {
             trailLoad = Resources.Load<GameObject>("Trails/" + SaveManager.Instance.GetTrail());
             Instantiate(trailLoad, Vector3.zero, new Quaternion(0, 0, 0, 0));
             DontDestroyOnLoad(GameObject.Find(SaveManager.Instance.GetTrail() + "(Clone)"));
+            trail = GameObject.Find(SaveManager.Instance.GetTrail() + "(Clone)");
         }
+
+        if (Input.GetMouseButtonDown(0))
+            trail.GetComponent<ParticleSystem>().Play();
 
         if (Input.GetMouseButton(0))
-        {
             trail.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            trail.GetComponent<ParticleSystem>().Play();
-            trail.GetComponent<ParticleSystem>().Play();
-            Debug.Log(trail.GetComponent<ParticleSystem>().isPlaying);
-        }
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    start = Input.mousePosition;
-        //    start = Camera.main.ScreenToWorldPoint(start).normalized;
-        //    trail.Play();
-        //}
-        //else
-        //{
-        //    trail.GetComponent<ParticleSystem>().Pause();
-        //}
     }
 }

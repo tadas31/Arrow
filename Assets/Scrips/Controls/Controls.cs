@@ -8,14 +8,11 @@ public class Controls : MonoBehaviour {
     Vector3 start = Vector3.zero;
     Vector3 end = Vector3.zero;
     float angle;
-    ParticleSystem trail;
 
     public int dragPosition = 0;
     GameManager manager;
     // Use this for initialization
     void Start () {
-		trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
-        trail.Stop();
         manager = FindObjectOfType<GameManager>();
     }
 	
@@ -27,17 +24,13 @@ public class Controls : MonoBehaviour {
         {
             start = Input.mousePosition;
             start = Camera.main.ScreenToWorldPoint(start).normalized;
-            trail.Play();
         }
-
-        trail.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //draws trail
 
         //gets last point
         if (Input.GetMouseButtonUp(0))
         {
             end = Input.mousePosition;
             end = Camera.main.ScreenToWorldPoint(end).normalized;
-            trail.Stop();
             angle = Vector2.SignedAngle(start - end, Vector3.down);   //gets angle of line
             Angle();
             manager.ChangeInDraw();

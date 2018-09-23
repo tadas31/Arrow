@@ -5,6 +5,6 @@ public class SaveState
 
     public int score = 0;
     public int coins = 0;
-    public string arrowSprite = "1";
-    public string activeTrail = "1";
+    public string arrowSprite = "arrow_1";
+    public string activeTrail = "trail_1";
 }

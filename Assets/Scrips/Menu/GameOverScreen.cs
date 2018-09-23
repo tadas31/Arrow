@@ -14,8 +14,7 @@ public class GameOverScreen : MonoBehaviour
     private float deltaY;
     private Transform maxHeight;
     private bool navigation;                //if true then uses tahes user to menu or game else navigates store
-
-    private ParticleSystem trail;
+    
     private float timer = 1.0f;
 
     // Use this for initialization
@@ -23,25 +22,17 @@ public class GameOverScreen : MonoBehaviour
     {
         navigation = false;
         maxHeight = GameObject.Find("MaxNavigationHeight").GetComponent<Transform>();
-        trail = GameObject.Find("DefaultTrail").GetComponent<ParticleSystem>();
-        trail.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-    }
 
-    //public void ShowMenu()
-    //{
-    //    navigation = true;
-    //}
+    }
 
 
     private void FixedUpdate()
     {
-
-        trail.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //draws trail
         if (timer <= 0)
         {
             foreach (Touch t in Input.touches)
@@ -52,7 +43,6 @@ public class GameOverScreen : MonoBehaviour
 
                 if (t.phase == TouchPhase.Began)
                 {
-                    trail.Play();
                     initialTouch = t;
                 }
                 else if (t.phase == TouchPhase.Moved)
@@ -96,7 +86,6 @@ public class GameOverScreen : MonoBehaviour
                         }
                     }
                     initialTouch = new Touch();
-                    trail.Stop();
                 }
             }
         }
