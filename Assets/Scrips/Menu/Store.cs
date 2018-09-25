@@ -19,15 +19,62 @@ public class Store : MonoBehaviour, IPointerClickHandler
     private int ammountOfArrowSkins = 3;
     private int ammountOfTrailSkins = 2;
 
+    private GameObject[] allArrowTogles;
+    private GameObject[] allTrailTogles;
+    private string selectedArrow;
+    private string selectedTrail;
+
     // Use this for initialization
     void Start () {
+        allArrowTogles = GameObject.FindGameObjectsWithTag("ArrowToggle");
+        allTrailTogles = GameObject.FindGameObjectsWithTag("TrailToggle");
+        selectedArrow = SaveManager.Instance.GetArrowSprite();
+        selectedTrail = SaveManager.Instance.GetTrail();
+        for (int i = 0; i < allArrowTogles.Length; i++)
+        {
+            allArrowTogles[i].GetComponent<Toggle>().interactable = false;
+            if (allArrowTogles[i].name == SaveManager.Instance.GetArrowSprite())
+                allArrowTogles[i].GetComponent<Toggle>().isOn = true;
+        }
+        for (int i = 0; i < allTrailTogles.Length; i++)
+        {
+            allTrailTogles[i].GetComponent<Toggle>().interactable = false;
+            if (allTrailTogles[i].name == SaveManager.Instance.GetTrail())
+                allTrailTogles[i].GetComponent<Toggle>().isOn = true;
+        }
+
         navigation = false;
         maxHeight = GameObject.Find("MaxNavigationHeight").GetComponent<Transform>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (selectedArrow != SaveManager.Instance.GetArrowSprite())
+        {
+            selectedArrow = SaveManager.Instance.GetArrowSprite();
+            for (int i = 0; i < allArrowTogles.Length; i++)
+            {
+                if (allArrowTogles[i].name == SaveManager.Instance.GetArrowSprite())
+                    allArrowTogles[i].GetComponent<Toggle>().isOn = true;
+                else
+                    allArrowTogles[i].GetComponent<Toggle>().isOn = false;
+            }
+        }
 
+        if (selectedTrail != SaveManager.Instance.GetTrail())
+        {
+            selectedTrail = SaveManager.Instance.GetTrail();
+            for (int i = 0; i < allTrailTogles.Length; i++)
+            {
+                if (allTrailTogles[i].name == SaveManager.Instance.GetTrail())
+                    allTrailTogles[i].GetComponent<Toggle>().isOn = true;
+                else
+                {
+                    allTrailTogles[i].GetComponent<Toggle>().isOn = false;
+                    allArrowTogles[i].GetComponent<Toggle>().interactable = false;
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
