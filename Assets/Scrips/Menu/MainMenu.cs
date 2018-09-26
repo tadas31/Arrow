@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour {
     private float deltaY;
 
     private Text scoreText;
+    private Text coinsText;
 
     // Use this for initialization
     void Start () {
@@ -25,11 +26,14 @@ public class MainMenu : MonoBehaviour {
         colors = new List<Color>() { Color.yellow, Color.red, new Color(0.9905f, 0.4065f, 0.8920f), Color.blue, new Color(0.4078f, 0.9921f, 0.9537f), Color.green, Color.yellow };
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
         scoreText = GameObject.Find("Score").GetComponent<Text>();
+        coinsText = GameObject.Find("Coins").GetComponent<Text>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         scoreText.text = "Max score - " + SaveManager.Instance.GetScore();
+        coinsText.text = "Coins - " + SaveManager.Instance.GetCoins();
+
         if (isColorLeapOver)
             StartCoroutine(ColorLerp());
     }
@@ -108,6 +112,11 @@ public class MainMenu : MonoBehaviour {
     public void OnStore()
     {
         SceneManager.LoadScene("Store");
+    }
+
+    public void OnReset()
+    {
+        SaveManager.Instance.ResetSave();
     }
 
     

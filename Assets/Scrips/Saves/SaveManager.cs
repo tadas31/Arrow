@@ -59,7 +59,7 @@ public class SaveManager : MonoBehaviour
     //Adds coins
     public void AddCoin(int coins)
     {
-        state.coins = coins;
+        state.coins += coins;
         Save();
     }
 
@@ -94,5 +94,34 @@ public class SaveManager : MonoBehaviour
     {
         return state.activeTrail;
     }
+
+    //check if arrow is owned
+    public bool IsArrowOwned(int index)
+    {
+        //check if the bit is set to 1 if yes arrow is owned
+        return (state.arrowOwned & (1 << index)) != 0;
+    }
+
+    //unlock a arrow
+    public void UnlockArrow(int index)
+    {
+        //togles on bit at index
+        state.arrowOwned |= 1 << index;
+    }
+
+    //check if trail is owned
+    public bool IsTrailOwned(int index)
+    {
+        //check if the bit is set to 1 if yes trail is owned
+        return (state.trailOwned & (1 << index)) != 0;
+    }
+
+    //unlock a trail
+    public void UnlockTrail(int index)
+    {
+        //togles on bit at index
+        state.trailOwned |= 1 << index;
+    }
+
 
 }
