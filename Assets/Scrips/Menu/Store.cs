@@ -33,7 +33,7 @@ public class Store : MonoBehaviour, IPointerClickHandler
     private int[] arrowPrices = { 0, 10, 50}; 
 
     //trail prices
-    private int[] trailPrices = { 0, 100, 100 };
+    private int[] trailPrices = { 0, 100, 100, 100, 100, 100 };
 
 
     // Use this for initialization
