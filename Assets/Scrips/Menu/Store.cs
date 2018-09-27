@@ -170,6 +170,8 @@ public class Store : MonoBehaviour, IPointerClickHandler
                 }
                 initialTouch = new Touch();
             }
+            navigation = false;
+
         }
     }
 
