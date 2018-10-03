@@ -19,7 +19,7 @@ public class ArrowScript : MonoBehaviour {
     float spriteTime = spriteTimeAmt;
 
     //Floats for sprite fade in
-    static float fadeTimeAmt = 1.5f;
+    static float fadeTimeAmt = 1f;
     float fadeTime = fadeTimeAmt;
 
     //For changing the sprites
@@ -36,8 +36,6 @@ public class ArrowScript : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + SaveManager.Instance.GetArrowSprite());
         timer = GetComponentInChildren<Image>();
-        GetComponent<MeshRenderer>().enabled = false;
-        timer.color = transparent;
     }
     // Update is called once per frame
 	void Update () {
@@ -95,7 +93,8 @@ public class ArrowScript : MonoBehaviour {
         fadeTime -= Time.deltaTime;
         float change = fadeTime / fadeTimeAmt;
         spriteRenderer.color = Color.Lerp(visible,transparent,change);//Makes the fade of the arrow to a seen object
-        timer.color = Color.Lerp(visible, transparent, change);
+        timer.canvasRenderer.SetColor(Color.Lerp(visible, transparent, change));
+        Debug.Log(timer.color.ToString());
     }
 
     /// <summary>
@@ -191,6 +190,14 @@ public class ArrowScript : MonoBehaviour {
     /// </summary>
     public void StartTimer()
     {
+        start = true;
+        //StartCoroutine(TimeForSetup());
+    }
+
+    IEnumerator TimeForSetup()
+    {
+        Debug.Log("Yes");
+        yield return new WaitForSeconds(0.4f);
         start = true;
     }
 
