@@ -17,7 +17,11 @@ public class ArrowScript : MonoBehaviour {
     //Floats for sprite change
     static float spriteTimeAmt = 0.5f;
     float spriteTime = spriteTimeAmt;
-    
+
+    //Floats for sprite fade in
+    static float fadeTimeAmt = 1.5f;
+    float fadeTime = fadeTimeAmt;
+
     //For changing the sprites
     private Color transparent = new Color(1f, 1f, 1f, 0f);
     private Color visible = new Color(1f, 1f, 1f, 1f);
@@ -39,21 +43,29 @@ public class ArrowScript : MonoBehaviour {
 	void Update () {
         if (start)
         {
-            if (time > 0 && !stop)
+            if (fadeTime / fadeTimeAmt > 0)
             {
-                TimerChange();
+                FadeIn();
+                timer.CrossFadeAlpha(0f, 1.5f, true);
             }
             else
             {
-                if (stop)
+                if (time > 0 && !stop)
                 {
-                    ChangeSprite(spriteWhenVisable);
+                    TimerChange();
                 }
-
-                if (time <= 0)
+                else
                 {
-                    //If the time ends(Change here)
-                    FindObjectOfType<GameManager>().GameOver();
+                    if (stop)
+                    {
+                        ChangeSprite(spriteWhenVisable);
+                    }
+
+                    if (time <= 0)
+                    {
+                        //If the time ends(Change here)
+                        FindObjectOfType<GameManager>().GameOver();
+                    }
                 }
             }
         }
@@ -74,6 +86,16 @@ public class ArrowScript : MonoBehaviour {
         }
 
         spriteRenderer.color = Color.Lerp(transparent, visible, Mathf.Abs(2 * change - 1f));//Makes the fade of the arrow to a circle
+    }
+
+    /// <summary>
+    /// Changes the sprite of the arrow
+    /// </summary>
+    private void FadeIn()
+    {
+        fadeTime -= Time.deltaTime;
+        float change = fadeTime / fadeTimeAmt;
+        spriteRenderer.color = Color.Lerp(visible,transparent,change);//Makes the fade of the arrow to a seen object
     }
 
     /// <summary>
