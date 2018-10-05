@@ -30,7 +30,7 @@ public class Store : MonoBehaviour, IPointerClickHandler
     private int selectedIndex;              //points to object that user wants to buy
 
     //arrow prices
-    private int[] arrowPrices = { 0, 10, 50}; 
+    private int[] arrowPrices = { 0, 10, 50, 50, 50}; 
 
     //trail prices
     private int[] trailPrices = { 0, 100, 100, 100, 100, 100 };
