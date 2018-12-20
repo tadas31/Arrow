@@ -17,17 +17,19 @@ public class GameManager : MonoBehaviour {
     private Canvas gameOverScreen;
 
     private Text scoreText;
-    private int score;
+    private Text levelText;
+    private int score = 0;
+    private int level = 0;
 
     // Use this for initialization
     void Start () {
         gameOverScreen = GameObject.Find("GameOverScreenCanvas").GetComponent<Canvas>();
         gameOverScreen.gameObject.SetActive(false);
         controlsScript = controls.GetComponent<Controls>();
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
         ArrowInstanisation();
         arrowScript = arrows[currentArrow].GetComponent<ArrowScript>();
         scoreText = GameObject.Find("Score").GetComponent<Text>();
-        score = 0;
     }
 	
 	// Update is called once per frame
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void ArrowInstanisation()
     {
+        StartCoroutine(LevelText(2f, levelText));
         DestroyArrows();
         //Calculating all of the width of the camera (5f is the camera size 2f is to both sides like from - 2.08 to 2.08)
         float cameraWidth = Camera.main.aspect * 5f *2f;
@@ -114,6 +117,47 @@ public class GameManager : MonoBehaviour {
             arrows[i].transform.localScale = new Vector2(scale,scale);
             arrows[i].GetComponent<ArrowScript>().SetTimer(time+(0.5f*i));//Sets the time for every arrow
             arrows[i].GetComponent<ArrowScript>().StartTimer();
+        }
+    }
+
+
+    public IEnumerator LevelText(float time, Text text) {
+        Debug.Log("Corountine started");
+        text.text = "Level " + ++level;
+        StartCoroutine(FadeTextToFullAlpha(time/3, text));
+        yield return new WaitForSeconds(time/3);
+        StartCoroutine(FadeTextToZeroAlpha(time / 3, text));
+    }
+
+    /// <summary>
+    /// Let the text apear
+    /// </summary>
+    /// <param name="t">Time to appear</param>
+    /// <param name="i">Text component</param>
+    /// <returns>Null</returns>
+    public IEnumerator FadeTextToFullAlpha(float t, Text i)
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+        while (i.color.a < 1.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Let the text disapear
+    /// </summary>
+    /// <param name="t">Time to disappear</param>
+    /// <param name="i">Text component</param>
+    /// <returns>Null</returns>
+    public IEnumerator FadeTextToZeroAlpha(float t, Text i)
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+        while (i.color.a > 0.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+            yield return null;
         }
     }
 }
